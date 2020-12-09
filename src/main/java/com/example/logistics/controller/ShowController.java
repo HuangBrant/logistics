@@ -1,5 +1,6 @@
 package com.example.logistics.controller;
 
+import com.example.logistics.dto.LoadDto;
 import com.example.logistics.dto.VisitsDto;
 import com.example.logistics.service.VisitsService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +29,12 @@ public class ShowController {
         }
     }
 
-    @RequestMapping(value = "/visits/g",method = RequestMethod.GET)
+    @RequestMapping(value = "/logistics/load",method = RequestMethod.GET)
     @ResponseBody
-    public Object get(@RequestParam Date startTime,@RequestParam Date endTime){
+    public Object getLoad(@RequestParam Date startTime,@RequestParam Date endTime){
         try {
-            VisitsDto visitsDto = visitsService.getVisits(startTime, endTime);
-            return visitsDto;
+            LoadDto load = visitsService.getLoad(startTime, endTime);
+            return null;
         }catch (Exception e){
             log.info("");
             return null;

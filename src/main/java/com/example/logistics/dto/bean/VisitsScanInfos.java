@@ -1,4 +1,4 @@
-package com.example.logistics.dto;
+package com.example.logistics.dto.bean;
 
 import lombok.Data;
 
