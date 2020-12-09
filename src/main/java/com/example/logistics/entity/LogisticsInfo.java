@@ -24,4 +24,6 @@ public class LogisticsInfo {
     private Date endTime;
 
     private Integer status;
+
+    private Integer positionid;
 }
