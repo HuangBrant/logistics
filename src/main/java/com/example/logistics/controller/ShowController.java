@@ -31,9 +31,21 @@ public class ShowController {
 
     @RequestMapping(value = "/logistics/load",method = RequestMethod.GET)
     @ResponseBody
-    public Object getLoad(@RequestParam Date startTime,@RequestParam Date endTime){
+    public LoadDto getLoad(@RequestParam Date startTime,@RequestParam Date endTime){
         try {
             LoadDto load = visitsService.getLoad(startTime, endTime);
+            return load;
+        }catch (Exception e){
+            log.info("");
+            return null;
+        }
+    }
+
+    @RequestMapping(value = "/flow",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getFlow(@RequestParam Date startTime,@RequestParam Date endTime){
+        try {
+
             return null;
         }catch (Exception e){
             log.info("");

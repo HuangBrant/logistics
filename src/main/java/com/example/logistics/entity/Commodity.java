@@ -2,11 +2,10 @@ package com.example.logistics.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,6 +20,10 @@ public class Commodity {
     private String type;
     private String overdue;
     private Date date;
-    private String expirationDate;
+    private Integer expirationDate;
     private BigDecimal price;
+
+    @OneToMany
+    @JoinColumn(name = "cid")
+    private List<CommTotal> commTotal;
 }

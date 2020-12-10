@@ -24,4 +24,12 @@ public class TimeUtil {
         }
         return new Date();
     }
+
+    public static int betweenDay(Date startTime, Date endTime){
+        long start = startTime.getTime();
+        long end = endTime.getTime();
+        long one = 24L * 60L * 60L * 1000L;
+        long day = (end - start) / one;
+        return (int)day;
+    }
 }
