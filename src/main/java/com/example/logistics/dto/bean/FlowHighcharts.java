@@ -8,6 +8,5 @@ import java.util.List;
 public class FlowHighcharts {
 
 
-    private List<Series> series;
     private String[] colors;
 }

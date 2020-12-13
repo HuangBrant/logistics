@@ -109,10 +109,11 @@ public class CommodityServiceImpl implements CommodityService {
 
 
         FlowHighcharts flowHighcharts = new FlowHighcharts();
-        flowHighcharts.setSeries(seriesList);
+
 
 
         FlowDto flowDto = new FlowDto();
+        flowDto.setSeries(seriesList);
         flowHighcharts.setColors(Util.getColors(seriesList.size()));
         flowDto.setFlowHighcharts(flowHighcharts);
         flowDto.setGoodsInfos(collect);
