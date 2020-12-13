@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class Series {
 
-    private List<double[]> date;
+    private List<double[]> data;
     private String name;
     private String type;
 }

@@ -98,7 +98,7 @@ public class CommodityServiceImpl implements CommodityService {
                         }
 
 
-                        series.setDate(dList);
+                        series.setData(dList);
                         series.setType("areaspline");
                         series.setName(a.getName());
                         seriesList.add(series);
