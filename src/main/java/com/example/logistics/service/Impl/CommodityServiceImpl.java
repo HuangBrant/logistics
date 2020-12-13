@@ -14,6 +14,7 @@ import com.example.logistics.entity.Goods;
 import com.example.logistics.service.CommodityService;
 import com.example.logistics.util.TimeUtil;
 import com.example.logistics.util.Util;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class CommodityServiceImpl implements CommodityService {
 
     @Autowired
@@ -92,6 +94,7 @@ public class CommodityServiceImpl implements CommodityService {
                             double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
                             double[] db = new double[2];
+                            log.info("时间:"+c.getStartTime().getTime());
                             db[0] = (double) c.getStartTime().getTime();
                             db[1] = f1;
                             dList.add(db);

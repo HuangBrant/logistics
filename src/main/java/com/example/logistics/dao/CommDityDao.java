@@ -111,7 +111,7 @@ public class CommDityDao {
             while (srs.next()) {
                 CommTotal commTotal = new CommTotal();
                 commTotal.setReceive(srs.getInt("receive"));
-                commTotal.setStartTime(srs.getTime("start_time"));
+                commTotal.setStartTime(srs.getDate("start_time"));
                 commTotalList.add(commTotal);
             }
 
