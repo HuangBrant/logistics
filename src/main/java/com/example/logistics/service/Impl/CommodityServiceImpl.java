@@ -92,7 +92,7 @@ public class CommodityServiceImpl implements CommodityService {
                             double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
                             double[] db = new double[2];
-                            db[0] = c.getStartTime().getTime();
+                            db[0] = (double) c.getStartTime().getTime();
                             db[1] = f1;
                             dList.add(db);
                         }
