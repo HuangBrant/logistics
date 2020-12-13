@@ -24,8 +24,6 @@ public class CommDityDao {
     public List<Commodity> getList(Date startTime, Date endTime){
         StringBuilder csb = new StringBuilder("select * from commodity");
 
-        StringBuilder sb = new StringBuilder("select count(receive) as receive,cid,send_status from commodity_total ");
-
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -42,6 +40,7 @@ public class CommDityDao {
 
             while (rs.next()){
                 Commodity commodity = new Commodity();
+                commodity.setId(rs.getInt("id"));
                 commodity.setDate(rs.getDate("date"));
                 commodity.setExpirationDate(rs.getInt("expiration_date"));
                 commodity.setName(rs.getNString("name"));
@@ -50,6 +49,11 @@ public class CommDityDao {
                 commodity.setTid(rs.getNString("tid"));
                 commodity.setType(rs.getNString("type"));
 
+                if (null==commodity.getId() || 0==commodity.getId()){
+                    commodityList.add(commodity);
+                    continue;
+                }
+                StringBuilder sb = new StringBuilder("select count(receive) as receive,cid,send_status from commodity_total ");
                 sb.append(" where cid="+commodity.getId());
                 if (null!=startTime){
                     sb.append(" and start_time>"+startTime);
@@ -60,6 +64,7 @@ public class CommDityDao {
                     sb.append("where end_time<="+endTime);
                 }
                 sb.append(" GROUP BY cid,send_status");
+                log.info("send sql: "+sb.toString());
                 sps = conn.prepareStatement(sb.toString());
                 srs = sps.executeQuery();
                 List<CommTotal> commTotalList = new ArrayList<>();
@@ -75,9 +80,17 @@ public class CommDityDao {
             }
             return commodityList;
         }catch (Exception e){
-
+            log.info("执行sql异常"+e);
         }finally {
-
+            try {
+                conn.close();
+                ps.close();
+                rs.close();
+                sps.close();
+                srs.close();
+            }catch (Exception e){
+                log.info("关闭流异常"+e);
+            }
         }
         return null;
     }

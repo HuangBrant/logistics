@@ -8,6 +8,7 @@ import java.util.Date;
 public class GoodsInfos {
 
     private String gname;
+    private String type;
     private Date startDate;
     private Date endDate;
 
