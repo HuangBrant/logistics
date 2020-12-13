@@ -13,6 +13,6 @@ public class VisitsScanInfos {
     private Integer logisticsNum;
     private Integer drop;
     private String fieldPath;
-    private Date expendTime;
-    private Date scanTime;
+    private String expendTime;
+    private String scanTime;
 }

@@ -24,5 +24,5 @@ public class LogisticsTotal {
     private Integer sentNum;
     private Date date;
     private String path;
-    private Date usedTime;
+    private Integer usedTime;
 }

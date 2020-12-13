@@ -44,16 +44,19 @@ public class VisitsServiceImpl implements VisitsService {
 
         List<VisitsScanInfos> scanInfosList = totalList.stream()
                 .map(a -> {
-                            VisitsScanInfos visitsScanInfos = new VisitsScanInfos();
-                            visitsScanInfos.setDrop(a.getDrop());
-                            visitsScanInfos.setExpendTime(a.getUsedTime());
-                            visitsScanInfos.setFieldPath(a.getPath());
-                            visitsScanInfos.setInvalid(a.getInvalid());
-                            visitsScanInfos.setLogisticsNum(a.getLogisticsNum());
-                            visitsScanInfos.setLoss(a.getLoss());
-                            visitsScanInfos.setScanTime(a.getDate());
-                            visitsScanInfos.setTotal(a.getTotal());
-                            return visitsScanInfos;
+                    VisitsScanInfos visitsScanInfos = new VisitsScanInfos();
+                    visitsScanInfos.setDrop(a.getDrop());
+                    int m = a.getUsedTime() / 60;
+                    int s = a.getUsedTime() % 60;
+                    visitsScanInfos.setExpendTime(m+" min "+s+" s");
+                    visitsScanInfos.setFieldPath(a.getPath());
+                    visitsScanInfos.setInvalid(a.getInvalid());
+                    visitsScanInfos.setLogisticsNum(a.getLogisticsNum());
+                    visitsScanInfos.setLoss(a.getLoss());
+                    String time = TimeUtil.toString(a.getDate(), "yyyyMMdd hh:mm:ss");
+                    visitsScanInfos.setScanTime(time);
+                    visitsScanInfos.setTotal(a.getTotal());
+                    return visitsScanInfos;
                         })
                 .collect(Collectors.toList());
 
@@ -61,9 +64,9 @@ public class VisitsServiceImpl implements VisitsService {
         VisitsPageData visitsPageData = new VisitsPageData();
         visitsPageData.setScanInfos(scanInfosList);
 
-        long total = totalList.stream().map(a -> (a.getLogisticsNum())).count();//总数
-        long receiveTotal = totalList.stream().map(a -> (a.getReceiveNum())).count();//收到总数
-        long sendTotal = totalList.stream().map(a -> (a.getSentNum())).count();//收到总数
+        long total = totalList.stream().mapToInt(a -> (a.getLogisticsNum())).sum();//总数
+        long receiveTotal = totalList.stream().mapToInt(a -> (a.getReceiveNum())).sum();//收到总数
+        long sendTotal = totalList.stream().mapToInt(a -> (a.getSentNum())).sum();//收到总数
 
         VisitsAvgInfo visitsAvgInfo = new VisitsAvgInfo();
         visitsAvgInfo.setTotalNume((int)(total/totalList.size()));
@@ -96,9 +99,9 @@ public class VisitsServiceImpl implements VisitsService {
 
         LoadDto loadDto = new LoadDto();
 
-        long total = totalList.stream().map(a -> (a.getLogisticsNum())).count();//总数
-        long receiveTotal = totalList.stream().map(a -> (a.getReceiveNum())).count();//收到总数
-        long sendTotal = totalList.stream().map(a -> (a.getSentNum())).count();//收到总数
+        long total = totalList.stream().mapToInt(a -> (a.getLogisticsNum())).sum();//总数
+        long receiveTotal = totalList.stream().mapToInt(a -> (a.getReceiveNum())).sum();//收到总数
+        long sendTotal = totalList.stream().mapToInt(a -> (a.getSentNum())).sum();//收到总数
 
         VisitsAvgInfo visitsAvgInfo = new VisitsAvgInfo();
         visitsAvgInfo.setTotalNume((int)(total/totalList.size()));
