@@ -8,6 +8,4 @@ import lombok.Data;
 public class VisitsDto {
 
     private VisitsPageData pageData;
-
-    private VisitsAvgInfo avgInfo;
 }

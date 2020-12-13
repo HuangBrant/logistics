@@ -60,7 +60,6 @@ public class VisitsServiceImpl implements VisitsService {
         VisitsDto visitsDto = new VisitsDto();
         VisitsPageData visitsPageData = new VisitsPageData();
         visitsPageData.setScanInfos(scanInfosList);
-        visitsDto.setPageData(visitsPageData);
 
         long total = totalList.stream().map(a -> (a.getLogisticsNum())).count();//总数
         long receiveTotal = totalList.stream().map(a -> (a.getReceiveNum())).count();//收到总数
@@ -72,7 +71,8 @@ public class VisitsServiceImpl implements VisitsService {
         visitsAvgInfo.setSentNum((int)(sendTotal/totalList.size()));
         visitsAvgInfo.setStartDate(startTime);
         visitsAvgInfo.setEndDate(endTime);
-        visitsDto.setAvgInfo(visitsAvgInfo);
+        visitsPageData.setAvgInfo(visitsAvgInfo);
+        visitsDto.setPageData(visitsPageData);
 
         return visitsDto;
     }

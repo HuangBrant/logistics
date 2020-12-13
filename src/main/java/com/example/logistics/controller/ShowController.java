@@ -1,9 +1,6 @@
 package com.example.logistics.controller;
 
-import com.example.logistics.dto.CommodityDto;
-import com.example.logistics.dto.FlowDto;
-import com.example.logistics.dto.LoadDto;
-import com.example.logistics.dto.VisitsDto;
+import com.example.logistics.dto.*;
 import com.example.logistics.service.CommodityService;
 import com.example.logistics.service.VisitsService;
 import com.example.logistics.util.TimeUtil;
@@ -50,9 +47,9 @@ public class ShowController {
         }
     }
 
-    @RequestMapping(value = "/wuliufuz/getPageDate",method = RequestMethod.GET)
+    @RequestMapping(value = "/wuliufuzai/getPageDate",method = RequestMethod.GET)
     @ResponseBody
-    public LoadDto getLoad(HttpServletRequest request){
+    public BasePage getLoad(HttpServletRequest request){
         try {
             Cookie[] cookies = request.getCookies();
             Date startTime = null;
@@ -68,7 +65,9 @@ public class ShowController {
                 }
             }
             LoadDto load = visitsService.getLoad(startTime, endTime);
-            return load;
+            BasePage basePage = new BasePage();
+            basePage.setPageData(load);
+            return basePage;
         }catch (Exception e){
             log.info(""+e);
             return null;
@@ -77,7 +76,7 @@ public class ShowController {
 
     @RequestMapping(value = "/wuliuliang/getPageDate",method = RequestMethod.GET)
     @ResponseBody
-    public Object getWuliuliang(HttpServletRequest request){
+    public BasePage getWuliuliang(HttpServletRequest request){
         try {
             Cookie[] cookies = request.getCookies();
             Date startTime = null;
@@ -93,7 +92,9 @@ public class ShowController {
                 }
             }
             FlowDto flow = commodityService.getFlow(startTime, endTime);
-            return flow;
+            BasePage basePage = new BasePage();
+            basePage.setPageData(flow);
+            return basePage;
         }catch (Exception e){
             log.info(""+e);
             return null;
@@ -102,7 +103,7 @@ public class ShowController {
 
     @RequestMapping(value = "/showTables/getPageDate",method = RequestMethod.GET)
     @ResponseBody
-    public Object getShow(HttpServletRequest request){
+    public BasePage getShow(HttpServletRequest request){
         try {
             Cookie[] cookies = request.getCookies();
             Date startTime = null;
@@ -118,7 +119,9 @@ public class ShowController {
                 }
             }
             CommodityDto show = commodityService.getShow(startTime, endTime);
-            return show;
+            BasePage basePage = new BasePage();
+            basePage.setPageData(show);
+            return basePage;
         }catch (Exception e){
             log.info(""+e);
             return null;

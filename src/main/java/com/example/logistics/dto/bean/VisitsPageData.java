@@ -8,4 +8,7 @@ import java.util.List;
 public class VisitsPageData {
 
     private List<VisitsScanInfos> scanInfos;
+
+    private VisitsAvgInfo avgInfo;
+
 }
