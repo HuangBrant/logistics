@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -124,14 +125,15 @@ public class VisitsServiceImpl implements VisitsService {
         List<List<Series>> datas = totalList.stream()
                 .map(a -> {
                     Date date = a.getDate();
-                    String time = TimeUtil.toString(date, "yyyy/MM/dd");
+                    //String time = TimeUtil.toString(date, "yyyy/MM/dd");
                     double i = a.getLogisticsNum() / count;
-                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                    BigDecimal bg = new BigDecimal(i);
                     List<Series> stringList = new ArrayList<>();
                     //String s ="Date.UTC("+time+"),"+decimalFormat.format(i);
                     Series series = new Series();
                     series.setDate(date);
-                    series.setValue(decimalFormat.format(i));
+                    double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    series.setValue(f1);
                     stringList.add(series);
                     return stringList;
                 }).collect(Collectors.toList());

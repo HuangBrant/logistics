@@ -8,5 +8,5 @@ import java.util.Date;
 public class Series {
 
     private Date date;
-    private String value;
+    private double value;
 }
