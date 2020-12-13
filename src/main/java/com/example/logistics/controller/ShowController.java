@@ -62,22 +62,19 @@ public class ShowController {
     }
 
     @RequestMapping(value = "/wuliufuzai/getPageDate",method = RequestMethod.GET)
-    public BasePage getLoad(HttpServletRequest request){
+    public BasePage getLoad(@RequestParam(required = false) String startTime,
+                            @RequestParam(required = false) String endTime){
         try {
-            Cookie[] cookies = request.getCookies();
-            Date startTime = null;
-            Date endTime = null;
-            if (null!=cookies && cookies.length>0) {
-                for (int i = 0; i < cookies.length; i++) {
-                    if (cookies[i].getName().equals("startTime")) {
-                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
-                    }
-                    if (cookies[i].getName().equals("endTime")) {
-                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
-                    }
-                }
+            Date start = null;
+            Date end = null;
+
+            if (null!=startTime) {
+                start = TimeUtil.toDate(startTime, "yyyy-MM-dd");
             }
-            LoadDto load = visitsService.getLoad(startTime, endTime);
+            if (null!=end) {
+                end = TimeUtil.toDate(endTime, "yyyy-MM-dd");
+            }
+            LoadDto load = visitsService.getLoad(start, end);
             BasePage basePage = new BasePage();
             basePage.setPageData(load);
             return basePage;
@@ -88,22 +85,19 @@ public class ShowController {
     }
 
     @RequestMapping(value = "/wuliuliang/getPageDate",method = RequestMethod.GET)
-    public BasePage getWuliuliang(HttpServletRequest request){
+    public BasePage getWuliuliang(@RequestParam(required = false) String startTime,
+                                  @RequestParam(required = false) String endTime){
         try {
-            Cookie[] cookies = request.getCookies();
-            Date startTime = null;
-            Date endTime = null;
-            if (null!=cookies && cookies.length>0) {
-                for (int i = 0; i < cookies.length; i++) {
-                    if (cookies[i].getName().equals("startTime")) {
-                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
-                    }
-                    if (cookies[i].getName().equals("endTime")) {
-                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
-                    }
-                }
+            Date start = null;
+            Date end = null;
+
+            if (null!=startTime) {
+                start = TimeUtil.toDate(startTime, "yyyy-MM-dd");
             }
-            FlowDto flow = commodityService.getFlow(startTime, endTime);
+            if (null!=end) {
+                end = TimeUtil.toDate(endTime, "yyyy-MM-dd");
+            }
+            FlowDto flow = commodityService.getFlow(start, end);
             BasePage basePage = new BasePage();
             basePage.setPageData(flow);
             return basePage;
@@ -114,22 +108,20 @@ public class ShowController {
     }
 
     @RequestMapping(value = "/showTables/getPageDate",method = RequestMethod.GET)
-    public BasePage getShow(HttpServletRequest request){
+    public BasePage getShow(@RequestParam(required = false) String startTime,
+                            @RequestParam(required = false) String endTime){
         try {
-            Cookie[] cookies = request.getCookies();
-            Date startTime = null;
-            Date endTime = null;
-            if (null!=cookies && cookies.length>0) {
-                for (int i = 0; i < cookies.length; i++) {
-                    if (cookies[i].getName().equals("startTime")) {
-                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
-                    }
-                    if (cookies[i].getName().equals("endTime")) {
-                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
-                    }
-                }
+            Date start = null;
+            Date end = null;
+
+            if (null!=startTime) {
+                start = TimeUtil.toDate(startTime, "yyyy-MM-dd");
             }
-            CommodityDto show = commodityService.getShow(startTime, endTime);
+            if (null!=end) {
+                end = TimeUtil.toDate(endTime, "yyyy-MM-dd");
+            }
+
+            CommodityDto show = commodityService.getShow(start, end);
             BasePage basePage = new BasePage();
             basePage.setPageData(show);
             return basePage;
