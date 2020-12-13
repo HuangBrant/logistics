@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class Highcharts {
 
-    private List<List<Series>> datas;
+    private List<double[]> datas;
 }
