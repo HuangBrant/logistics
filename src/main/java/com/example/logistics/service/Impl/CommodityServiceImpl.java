@@ -48,12 +48,14 @@ public class CommodityServiceImpl implements CommodityService {
             @Override
             public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder cb) {
                 List<Predicate> list = new ArrayList<Predicate>();
-                Join<Commodity, CommTotal> join = root.join("cid");
+                Root commTotal = criteriaQuery.from(CommTotal.class);
+                list.add(cb.equal(root.get("id"),commTotal.get("cid")));//两表关联
+                //Join<Commodity,CommTotal> join = root.join("id",JoinType.INNER);
                 if (null!=startTime){
-                    list.add(cb.greaterThan(join.get("commTotal").get("startTime"),startTime));
+                    list.add(cb.greaterThan(commTotal.get("startTime"),startTime));
                 }
                 if (null!=endTime){
-                    list.add(cb.lessThanOrEqualTo(join.get("commTotal").get("endTime"),endTime));
+                    list.add(cb.lessThanOrEqualTo(commTotal.get("endTime"),endTime));
                 }
                 return cb.and(list.toArray(new Predicate[list.size()]));
             }
@@ -101,19 +103,17 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public CommodityDto getShow(Date startTime, Date endTime) {
 
-        Specification specification = new Specification() {
-            @Override
-            public Predicate toPredicate(Root root, CriteriaQuery criteriaQuery, CriteriaBuilder cb) {
-                List<Predicate> list = new ArrayList<Predicate>();
-                Join<Commodity, CommTotal> join = root.join("cid");
-                if (null!=startTime){
-                    list.add(cb.greaterThan(join.get("commTotal").get("startTime"),startTime));
-                }
-                if (null!=endTime){
-                    list.add(cb.lessThanOrEqualTo(join.get("commTotal").get("endTime"),endTime));
-                }
-                return cb.and(list.toArray(new Predicate[list.size()]));
+        Specification specification = (root, criteriaQuery, cb) -> {
+            List<Predicate> list = new ArrayList<Predicate>();
+            Root commTotal = criteriaQuery.from(CommTotal.class);
+            list.add(cb.equal(root.get("id"),commTotal.get("cid")));//两表关联
+            if (null!=startTime){
+                list.add(cb.greaterThan(commTotal.get("startTime"),startTime));
             }
+            if (null!=endTime){
+                list.add(cb.lessThanOrEqualTo(commTotal.get("endTime"),endTime));
+            }
+            return cb.and(list.toArray(new Predicate[list.size()]));
         };
         List<Commodity> list = commodityRepository.findAll(specification);
 

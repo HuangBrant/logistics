@@ -24,6 +24,6 @@ public class Commodity {
     private BigDecimal price;
 
     @OneToMany
-    @JoinColumn(name = "cid")
+    @JoinColumn(name = "cid",referencedColumnName = "id")
     private List<CommTotal> commTotal;
 }

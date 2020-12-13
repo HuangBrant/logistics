@@ -20,10 +20,9 @@ public class LogisticsTotal {
     private Integer loss;
     private Integer logisticsNum;
     private Integer drop;
-    private Integer totalNume;
     private Integer receiveNum;
     private Integer sentNum;
     private Date date;
     private String path;
-    private Date used_time;
+    private Date usedTime;
 }

@@ -25,6 +25,16 @@ public class TimeUtil {
         return new Date();
     }
 
+    public static Date toDate(String time,String format){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        try {
+            return simpleDateFormat.parse(time);
+        } catch (ParseException e) {
+            log.info("time error:"+e);
+        }
+        return new Date();
+    }
+
     public static int betweenDay(Date startTime, Date endTime){
         long start = startTime.getTime();
         long end = endTime.getTime();

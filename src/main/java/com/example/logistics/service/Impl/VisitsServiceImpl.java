@@ -46,7 +46,7 @@ public class VisitsServiceImpl implements VisitsService {
                 .map(a -> {
                             VisitsScanInfos visitsScanInfos = new VisitsScanInfos();
                             visitsScanInfos.setDrop(a.getDrop());
-                            visitsScanInfos.setExpendTime(a.getUsed_time());
+                            visitsScanInfos.setExpendTime(a.getUsedTime());
                             visitsScanInfos.setFieldPath(a.getPath());
                             visitsScanInfos.setInvalid(a.getInvalid());
                             visitsScanInfos.setLogisticsNum(a.getLogisticsNum());
@@ -115,6 +115,7 @@ public class VisitsServiceImpl implements VisitsService {
         PeakInfo peakInfo = new PeakInfo();
         peakInfo.setMax(max);
         peakInfo.setMin(min);
+        peakInfo.setTotal(count.intValue());
         loadDto.setPeakInfo(peakInfo);
 
         List<Series> datas = totalList.stream()
