@@ -55,9 +55,9 @@ public class CommodityServiceImpl implements CommodityService {
                     GoodsInfos goodsInfos = new GoodsInfos();
 
                     int sendTotal = a.getCommTotal().stream().filter(s ->(s.getSendStatus()==1))
-                            .collect(Collectors.summingInt(c ->c.getReceive()));
+                            .mapToInt(c -> (c.getReceive())).sum();
                     int receiveTotal = a.getCommTotal().stream().filter(s ->(s.getSendStatus()==2))
-                            .collect(Collectors.summingInt(c ->c.getReceive()));
+                            .mapToInt(c -> (c.getReceive())).sum();
                     PackageInfo packageInfo = new PackageInfo();
                     packageInfo.setReceiveNum( receiveTotal);
                     packageInfo.setSentNum(sendTotal);

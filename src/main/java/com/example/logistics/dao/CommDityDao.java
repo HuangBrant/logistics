@@ -53,7 +53,7 @@ public class CommDityDao {
                     commodityList.add(commodity);
                     continue;
                 }
-                StringBuilder sb = new StringBuilder("select count(receive) as receive,cid,send_status from commodity_total ");
+                StringBuilder sb = new StringBuilder("select SUM(receive) as receive,cid,send_status from commodity_total ");
                 sb.append(" where cid="+commodity.getId());
                 if (null!=startTime){
                     sb.append(" and start_time>"+startTime);
