@@ -6,5 +6,5 @@ import lombok.Data;
 public class Series {
 
     private String date;
-    private String value;
+    //private String value;
 }
