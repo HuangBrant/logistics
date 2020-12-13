@@ -26,20 +26,23 @@ public class ShowController {
 
     @RequestMapping(value = "/visits/getPageDate",method = RequestMethod.GET)
     @ResponseBody
-    public VisitsDto getVisits(@RequestParam(required = false) Date startTime,
-                               @RequestParam(required = false) Date endTime, HttpServletResponse response){
+    public VisitsDto getVisits(@RequestParam(required = false) String startTime,
+                               @RequestParam(required = false) String endTime, HttpServletResponse response){
         try {
-            VisitsDto visitsDto = visitsService.getVisits(startTime, endTime);
+            Date start =null;
+            Date end = null;
             if (null!=startTime) {
-                String start = TimeUtil.toString(startTime, "yyyyMMddHHmmss");
-                Cookie cookie1 = new Cookie("startTime",start);
+                start = TimeUtil.toDate(startTime, "yyyy-MM-dd");
+                Cookie cookie1 = new Cookie("startTime",startTime);
                 response.addCookie(cookie1);
             }
             if (null!=endTime) {
-                String end = TimeUtil.toString(endTime, "yyyyMMddHHmmss");
-                Cookie cookie2 = new Cookie("endTime", end);
+                end = TimeUtil.toDate(endTime, "yyyy-MM-dd");
+                Cookie cookie2 = new Cookie("endTime", startTime);
                 response.addCookie(cookie2);
             }
+            VisitsDto visitsDto = visitsService.getVisits(start, end);
+
             return visitsDto;
         }catch (Exception e){
             log.info(""+e);
@@ -57,10 +60,10 @@ public class ShowController {
             if (null!=cookies && cookies.length>0) {
                 for (int i = 0; i < cookies.length; i++) {
                     if (cookies[i].getName().equals("startTime")) {
-                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyyMMddHHmmss");
+                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
                     }
                     if (cookies[i].getName().equals("endTime")) {
-                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyyMMddHHmmss");
+                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
                     }
                 }
             }
@@ -84,10 +87,10 @@ public class ShowController {
             if (null!=cookies && cookies.length>0) {
                 for (int i = 0; i < cookies.length; i++) {
                     if (cookies[i].getName().equals("startTime")) {
-                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyyMMddHHmmss");
+                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
                     }
                     if (cookies[i].getName().equals("endTime")) {
-                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyyMMddHHmmss");
+                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
                     }
                 }
             }
@@ -111,10 +114,10 @@ public class ShowController {
             if (null!=cookies && cookies.length>0) {
                 for (int i = 0; i < cookies.length; i++) {
                     if (cookies[i].getName().equals("startTime")) {
-                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyyMMddHHmmss");
+                        startTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
                     }
                     if (cookies[i].getName().equals("endTime")) {
-                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyyMMddHHmmss");
+                        endTime = TimeUtil.toDate(cookies[i].getValue(), "yyyy-MM-dd");
                     }
                 }
             }
