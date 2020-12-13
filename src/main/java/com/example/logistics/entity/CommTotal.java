@@ -21,8 +21,4 @@ public class CommTotal {
     private Date startTime;
     private Date endTime;
 
-    @ManyToOne
-    @JoinColumn(name = "id",referencedColumnName = "cid")
-    private Commodity commodity;
-
 }

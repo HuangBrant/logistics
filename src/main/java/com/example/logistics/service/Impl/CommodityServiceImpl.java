@@ -60,6 +60,8 @@ public class CommodityServiceImpl implements CommodityService {
         List<Commodity> list = commodityRepository.findAll(specification);
 
         long commTotal = commTotalRepository.count();//总商品总数
+        List<double[]> dList = new ArrayList<>();
+
         List<GoodsInfos> collect = list.stream()
                 .map(a -> {
                     GoodsInfos goodsInfos = new GoodsInfos();
@@ -92,25 +94,24 @@ public class CommodityServiceImpl implements CommodityService {
 
                     Integer receive = commTotalRepository.countReceive(a.getId());//每类商品总数,时间
                     Date receiveTime = commTotalRepository.receiveTime(a.getId());//每类商品总数,时间
-                    FlowHighcharts flowHighcharts = new FlowHighcharts();
                     double j = receive/commTotal;
                     BigDecimal bg = new BigDecimal(j);
                     double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
-                    List<double[]> dList = new ArrayList<>();
                     double[] db = new double[2];
                     db[0] = receiveTime.getTime();
                     db[1] = f1;
                     dList.add(db);
-                    flowHighcharts.setSeries(dList);
-                    goodsInfos.setFlowHighcharts(flowHighcharts);
 
                     return goodsInfos;
                 }).collect(Collectors.toList());
 
+        FlowHighcharts flowHighcharts = new FlowHighcharts();
+        flowHighcharts.setSeries(dList);
+
 
         FlowDto flowDto = new FlowDto();
-
+        flowDto.setFlowHighcharts(flowHighcharts);
         flowDto.setGoodsInfos(collect);
         return flowDto;
     }

@@ -9,4 +9,5 @@ import java.util.List;
 @Data
 public class FlowDto {
     private List<GoodsInfos> goodsInfos;
+    private FlowHighcharts flowHighcharts;
 }

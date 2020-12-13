@@ -9,5 +9,5 @@ public class FlowHighcharts {
 
 
     private List<double[]> series;
-    private String[] colors = {"colors.green", "colors.blue", "colors.orange", "colors.pink"};
+    private String[] colors = {"green", "blue", "orange", "pink"};
 }
