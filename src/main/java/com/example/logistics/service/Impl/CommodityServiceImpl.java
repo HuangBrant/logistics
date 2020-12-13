@@ -101,6 +101,7 @@ public class CommodityServiceImpl implements CommodityService {
                     double[] db = new double[2];
                     db[0] = receiveTime.getTime();
                     db[1] = f1;
+                    dList.add(db);
                     flowHighcharts.setSeries(dList);
                     goodsInfos.setFlowHighcharts(flowHighcharts);
 
