@@ -11,7 +11,7 @@ public class TableStyles {
     private String productName;
     private String Type;
     private String overdue;
-    private Date date;
+    private long date;
     private Integer expirationDate;
     private BigDecimal price;
 }

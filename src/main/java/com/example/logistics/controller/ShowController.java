@@ -1,5 +1,6 @@
 package com.example.logistics.controller;
 
+import com.alibaba.druid.util.StringUtils;
 import com.example.logistics.dto.*;
 import com.example.logistics.service.CommodityService;
 import com.example.logistics.service.VisitsService;
@@ -14,8 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-@CrossOrigin
-@Controller
+@RestController
 @Slf4j
 public class ShowController {
 
@@ -25,15 +25,24 @@ public class ShowController {
     CommodityService commodityService;
 
     @RequestMapping(value = "/visits/getPageDate",method = RequestMethod.GET)
-    @ResponseBody
     public VisitsDto getVisits(@RequestParam(required = false) String startTime,
-                               @RequestParam(required = false) String endTime, HttpServletResponse response){
+                               @RequestParam(required = false) String endTime, HttpServletResponse response,HttpServletRequest request){
         try {
             Date start =null;
             Date end = null;
+            String url = request.getHeader("Origin");
+            if (!StringUtils.isEmpty(url)) {
+                String val = response.getHeader("Access-Control-Allow-Origin");
+                if (StringUtils.isEmpty(val)) {
+                    response.addHeader("Access-Control-Allow-Origin", url);
+                    response.addHeader("Access-Control-Allow-Credentials", "true");
+                }
+            }
             if (null!=startTime) {
                 start = TimeUtil.toDate(startTime, "yyyy-MM-dd");
                 Cookie cookie1 = new Cookie("startTime",startTime);
+                cookie1.setMaxAge(-1);
+                cookie1.setPath("/");
                 response.addCookie(cookie1);
             }
             if (null!=endTime) {
@@ -51,7 +60,6 @@ public class ShowController {
     }
 
     @RequestMapping(value = "/wuliufuzai/getPageDate",method = RequestMethod.GET)
-    @ResponseBody
     public BasePage getLoad(HttpServletRequest request){
         try {
             Cookie[] cookies = request.getCookies();
@@ -78,7 +86,6 @@ public class ShowController {
     }
 
     @RequestMapping(value = "/wuliuliang/getPageDate",method = RequestMethod.GET)
-    @ResponseBody
     public BasePage getWuliuliang(HttpServletRequest request){
         try {
             Cookie[] cookies = request.getCookies();
@@ -105,7 +112,6 @@ public class ShowController {
     }
 
     @RequestMapping(value = "/showTables/getPageDate",method = RequestMethod.GET)
-    @ResponseBody
     public BasePage getShow(HttpServletRequest request){
         try {
             Cookie[] cookies = request.getCookies();

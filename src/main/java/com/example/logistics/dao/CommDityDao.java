@@ -56,12 +56,12 @@ public class CommDityDao {
                 StringBuilder sb = new StringBuilder("select SUM(receive) as receive,cid,send_status from commodity_total ");
                 sb.append(" where cid="+commodity.getId());
                 if (null!=startTime){
-                    sb.append(" and start_time>"+startTime);
+                    sb.append(" and start_time>"+startTime.getTime());
                     if (null!=endTime){
-                        sb.append(" and end_time<="+endTime);
+                        sb.append(" and end_time<="+endTime.getTime());
                     }
                 }else if (null!=endTime){
-                    sb.append("where end_time<="+endTime);
+                    sb.append("where end_time<="+endTime.getTime());
                 }
                 sb.append(" GROUP BY cid,send_status");
                 log.info("send sql: "+sb.toString());

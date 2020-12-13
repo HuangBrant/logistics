@@ -131,7 +131,7 @@ public class CommodityServiceImpl implements CommodityService {
         List<TableStyles> styles = list.stream()
                 .map(a -> {
                     TableStyles tableStyles = new TableStyles();
-                    tableStyles.setDate(a.getDate());
+                    tableStyles.setDate(a.getDate().getTime());
                     tableStyles.setExpirationDate(a.getExpirationDate());
                     tableStyles.setId(a.getId());
                     tableStyles.setOverdue(a.getOverdue());

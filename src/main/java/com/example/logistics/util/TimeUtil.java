@@ -43,6 +43,9 @@ public class TimeUtil {
         long end = endTime.getTime();
         long one = 24L * 60L * 60L * 1000L;
         long day = (end - start) / one;
+        if (0>=day){
+            day=1;
+        }
         return (int)day;
     }
 }
