@@ -37,7 +37,7 @@ public class TimeUtil {
 
     public static int betweenDay(Date startTime, Date endTime){
         if (null!=startTime || null!=endTime){
-            return 0;
+            return 1;
         }
         long start = startTime.getTime();
         long end = endTime.getTime();
