@@ -128,7 +128,7 @@ public class VisitsServiceImpl implements VisitsService {
                     double i = a.getLogisticsNum() / count;
                     DecimalFormat decimalFormat = new DecimalFormat(".00");
                     Series series = new Series();
-                    series.setDate(time);
+                    series.setDate("Date.UTC("+time+")");
                     series.setValue(decimalFormat.format(i));
                     return series;
                 }).collect(Collectors.toList());
