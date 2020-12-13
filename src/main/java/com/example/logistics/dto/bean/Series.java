@@ -2,9 +2,11 @@ package com.example.logistics.dto.bean;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class Series {
 
-    private String date;
+    private Date date;
     private String value;
 }

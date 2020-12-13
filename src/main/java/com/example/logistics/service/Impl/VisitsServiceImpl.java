@@ -130,7 +130,7 @@ public class VisitsServiceImpl implements VisitsService {
                     //List<String> stringList = new ArrayList<>();
                     //String s ="Date.UTC("+time+"),"+decimalFormat.format(i);
                     Series series = new Series();
-                    series.setDate(time);
+                    series.setDate(date);
                     series.setValue(decimalFormat.format(i));
                     //stringList.add(s);
                     return series;
