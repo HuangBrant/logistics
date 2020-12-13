@@ -13,6 +13,7 @@ import com.example.logistics.entity.Commodity;
 import com.example.logistics.entity.Goods;
 import com.example.logistics.service.CommodityService;
 import com.example.logistics.util.TimeUtil;
+import com.example.logistics.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
@@ -112,6 +113,7 @@ public class CommodityServiceImpl implements CommodityService {
 
 
         FlowDto flowDto = new FlowDto();
+        flowHighcharts.setColors(Util.getColors(seriesList.size()));
         flowDto.setFlowHighcharts(flowHighcharts);
         flowDto.setGoodsInfos(collect);
         return flowDto;
