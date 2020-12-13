@@ -48,6 +48,8 @@ public class ShowController {
             if (null!=endTime) {
                 end = TimeUtil.toDate(endTime, "yyyy-MM-dd");
                 Cookie cookie2 = new Cookie("endTime", startTime);
+                cookie2.setMaxAge(-1);
+                cookie2.setPath("/");
                 response.addCookie(cookie2);
             }
             VisitsDto visitsDto = visitsService.getVisits(start, end);
