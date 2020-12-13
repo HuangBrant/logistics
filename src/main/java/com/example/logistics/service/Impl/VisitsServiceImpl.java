@@ -121,19 +121,19 @@ public class VisitsServiceImpl implements VisitsService {
         peakInfo.setTotal(count.intValue());
         loadDto.setPeakInfo(peakInfo);
 
-        List<Series> datas = totalList.stream()
+        List<List<Series>> datas = totalList.stream()
                 .map(a -> {
                     Date date = a.getDate();
                     String time = TimeUtil.toString(date, "yyyy/MM/dd");
                     double i = a.getLogisticsNum() / count;
                     DecimalFormat decimalFormat = new DecimalFormat("0.00");
-                    //List<String> stringList = new ArrayList<>();
+                    List<Series> stringList = new ArrayList<>();
                     //String s ="Date.UTC("+time+"),"+decimalFormat.format(i);
                     Series series = new Series();
                     series.setDate(date);
                     series.setValue(decimalFormat.format(i));
-                    //stringList.add(s);
-                    return series;
+                    stringList.add(series);
+                    return stringList;
                 }).collect(Collectors.toList());
         Highcharts highcharts = new Highcharts();
         highcharts.setDatas(datas);
