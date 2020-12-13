@@ -15,9 +15,6 @@ public interface CommTotalRepository extends JpaRepository<CommTotal,Integer>, J
     @Query(value = "select SUM(receive) from commodity_total",nativeQuery = true)
     Integer getCount();
 
-    @Query(value = "select SUM(receive) as receive from commodity_total where cid=?1 GROUP BY cid ",nativeQuery = true)
-    Integer countReceive(Integer cid);
-
     @Query(value = "select start_time from commodity_total where cid=?1 limit 1",nativeQuery = true)
     Date receiveTime(Integer cid);
 }

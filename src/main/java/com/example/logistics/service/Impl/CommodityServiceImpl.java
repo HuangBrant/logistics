@@ -48,8 +48,7 @@ public class CommodityServiceImpl implements CommodityService {
         List<Commodity> list = commDityDao.getList(startTime, endTime);
 
         long commTotal = commTotalRepository.count();//总商品总数
-        List<double[]> dList = new ArrayList<>();
-
+        List<Series> seriesList = new ArrayList<>();
         List<GoodsInfos> collect = list.stream()
                 .map(a -> {
                     GoodsInfos goodsInfos = new GoodsInfos();
@@ -81,24 +80,35 @@ public class CommodityServiceImpl implements CommodityService {
                     peakInfo.setTotal(count.intValue());
                     goodsInfos.setPeakInfo(peakInfo);
 
-                    Integer receive = commTotalRepository.countReceive(a.getId());//每类商品总数,时间
-                    Date receiveTime = commTotalRepository.receiveTime(a.getId());//每类商品总数,时间
-                    if (null!=receiveTime) {
-                        double j = receive / commTotal;
-                        BigDecimal bg = new BigDecimal(j);
-                        double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    List<CommTotal> receive = commDityDao.getList(a.getId());//每类商品总数,时间
 
-                        double[] db = new double[2];
-                        db[0] = receiveTime.getTime();
-                        db[1] = f1;
-                        dList.add(db);
+                    if (receive.size()>0) {
+                        Series series = new Series();
+                        List<double[]> dList = new ArrayList<>();
+                        for (CommTotal c:receive) {
+                            double j = c.getReceive() / commTotal;
+                            BigDecimal bg = new BigDecimal(j);
+                            double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+                            double[] db = new double[2];
+                            db[0] = c.getStartTime().getTime();
+                            db[1] = f1;
+                            dList.add(db);
+                        }
+
+
+                        series.setDate(dList);
+                        series.setType(a.getType());
+                        series.setName(a.getName());
+                        seriesList.add(series);
                     }
 
                     return goodsInfos;
                 }).collect(Collectors.toList());
 
+
         FlowHighcharts flowHighcharts = new FlowHighcharts();
-        flowHighcharts.setSeries(dList);
+        flowHighcharts.setSeries(seriesList);
 
 
         FlowDto flowDto = new FlowDto();

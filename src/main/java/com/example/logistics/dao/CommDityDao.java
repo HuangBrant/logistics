@@ -94,4 +94,40 @@ public class CommDityDao {
         }
         return null;
     }
+
+    public List<CommTotal> getList(Integer cid){
+        StringBuilder sb = new StringBuilder("select SUM(receive) as receive,start_time from commodity_total where cid="+cid+" GROUP BY cid, start_time");
+
+        Connection conn = null;
+
+        PreparedStatement sps = null;
+        ResultSet srs = null;
+        List<CommTotal> commTotalList = new ArrayList<>();
+
+        try {
+            conn =dataSource.getConnection();
+            sps = conn.prepareStatement(sb.toString());
+            srs = sps.executeQuery();
+            while (srs.next()) {
+                CommTotal commTotal = new CommTotal();
+                commTotal.setReceive(srs.getInt("receive"));
+                commTotal.setStartTime(srs.getTime("start_time"));
+                commTotalList.add(commTotal);
+            }
+
+            return commTotalList;
+        }catch (Exception e){
+            log.info("执行sql异常"+e);
+        }finally {
+            try {
+                conn.close();
+                sps.close();
+                srs.close();
+            }catch (Exception e){
+                log.info("关闭流异常"+e);
+            }
+        }
+        return null;
+    }
+
 }
