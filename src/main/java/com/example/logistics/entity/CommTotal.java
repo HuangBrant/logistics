@@ -2,10 +2,7 @@ package com.example.logistics.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -23,5 +20,9 @@ public class CommTotal {
     private BigDecimal price;
     private Date startTime;
     private Date endTime;
+
+    @ManyToOne
+    @JoinColumn(name = "id",referencedColumnName = "cid")
+    private Commodity commodity;
 
 }

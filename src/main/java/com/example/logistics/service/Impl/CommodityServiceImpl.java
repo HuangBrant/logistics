@@ -6,10 +6,7 @@ import com.example.logistics.dao.GoodsRepository;
 import com.example.logistics.dto.CommodityDto;
 import com.example.logistics.dto.FlowDto;
 import com.example.logistics.dto.TableStyles;
-import com.example.logistics.dto.bean.GoodsInfos;
-import com.example.logistics.dto.bean.LogisticsInfo;
-import com.example.logistics.dto.bean.PackageInfo;
-import com.example.logistics.dto.bean.PeakInfo;
+import com.example.logistics.dto.bean.*;
 import com.example.logistics.entity.CommTotal;
 import com.example.logistics.entity.Commodity;
 import com.example.logistics.entity.Goods;
@@ -62,6 +59,7 @@ public class CommodityServiceImpl implements CommodityService {
         };
         List<Commodity> list = commodityRepository.findAll(specification);
 
+        long commTotal = commTotalRepository.count();//总商品总数
         List<GoodsInfos> collect = list.stream()
                 .map(a -> {
                     GoodsInfos goodsInfos = new GoodsInfos();
@@ -92,10 +90,26 @@ public class CommodityServiceImpl implements CommodityService {
                     peakInfo.setTotal(count.intValue());
                     goodsInfos.setPeakInfo(peakInfo);
 
+                    Integer receive = commTotalRepository.countReceive(a.getId());//每类商品总数,时间
+                    Date receiveTime = commTotalRepository.receiveTime(a.getId());//每类商品总数,时间
+                    FlowHighcharts flowHighcharts = new FlowHighcharts();
+                    double j = receive/commTotal;
+                    BigDecimal bg = new BigDecimal(j);
+                    double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+                    List<double[]> dList = new ArrayList<>();
+                    double[] db = new double[2];
+                    db[0] = receiveTime.getTime();
+                    db[1] = f1;
+                    flowHighcharts.setSeries(dList);
+                    goodsInfos.setFlowHighcharts(flowHighcharts);
+
                     return goodsInfos;
                 }).collect(Collectors.toList());
 
+
         FlowDto flowDto = new FlowDto();
+
         flowDto.setGoodsInfos(collect);
         return flowDto;
     }

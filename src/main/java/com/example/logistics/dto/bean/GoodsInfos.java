@@ -13,5 +13,6 @@ public class GoodsInfos {
 
     private PeakInfo peakInfo;
     private PackageInfo packageInfo;
+    private FlowHighcharts flowHighcharts;
 
 }
