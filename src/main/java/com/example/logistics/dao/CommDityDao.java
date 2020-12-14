@@ -67,7 +67,7 @@ public class CommDityDao {
                         sb.append(" and end_time<="+endTime.getTime());
                     }
                 }else if (null!=endTime){
-                    sb.append("where end_time<="+endTime.getTime());
+                    sb.append(" end_time<="+endTime.getTime());
                 }
                 sb.append(" GROUP BY cid,send_status");
                 log.info("send sql: "+sb.toString());
