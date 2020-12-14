@@ -22,10 +22,14 @@ public class CommDityDao {
     private DataSource dataSource;
 
     public List<Commodity> getList(Date startTime, Date endTime){
-        StringBuilder csb = new StringBuilder("select d.* from commodity d,commodity_total t where d.id=t.cid " +
-                " and start_time>"+startTime.getTime()+
-                " and end_time<="+endTime.getTime());
+        StringBuilder csb = new StringBuilder("select d.* from commodity d,commodity_total t where d.id=t.cid ");
 
+        if (null!=startTime){
+            csb.append(" and start_time>"+startTime.getTime());
+        }
+        if (null!=endTime){
+            csb.append(" and end_time<="+endTime.getTime());
+        }
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
