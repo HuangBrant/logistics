@@ -71,7 +71,7 @@ public class ShowController {
             if (null!=startTime) {
                 start = TimeUtil.toDate(startTime, "yyyy-MM-dd");
             }
-            if (null!=end) {
+            if (null!=endTime) {
                 end = TimeUtil.toDate(endTime, "yyyy-MM-dd");
             }
             LoadDto load = visitsService.getLoad(start, end);
@@ -94,7 +94,7 @@ public class ShowController {
             if (null!=startTime) {
                 start = TimeUtil.toDate(startTime, "yyyy-MM-dd");
             }
-            if (null!=end) {
+            if (null!=endTime) {
                 end = TimeUtil.toDate(endTime, "yyyy-MM-dd");
             }
             FlowDto flow = commodityService.getFlow(start, end);
@@ -117,7 +117,7 @@ public class ShowController {
             if (null!=startTime) {
                 start = TimeUtil.toDate(startTime, "yyyy-MM-dd");
             }
-            if (null!=end) {
+            if (null!=endTime) {
                 end = TimeUtil.toDate(endTime, "yyyy-MM-dd");
             }
 

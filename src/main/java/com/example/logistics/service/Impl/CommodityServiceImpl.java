@@ -50,7 +50,8 @@ public class CommodityServiceImpl implements CommodityService {
 
         List<Commodity> list = commDityDao.getList(startTime, endTime);
 
-        long commTotal = commTotalRepository.count();//总商品总数
+        long commTotal = commTotalRepository.getCount();//总商品总数
+
         List<Series> seriesList = new ArrayList<>();
         List<GoodsInfos> collect = list.stream()
                 .map(a -> {
@@ -181,7 +182,18 @@ public class CommodityServiceImpl implements CommodityService {
         logisticsInfo.setTotalPackage(sendT+receiveT);
         commodityDto.setLogisticsInfo(logisticsInfo);
 
-        List<Goods> goodsList = goodsRepository.findAll();
+
+        Specification specification2 = (root, criteriaQuery, cb) -> {
+            List<Predicate> list1 = new ArrayList<Predicate>();
+            if (null!=startTime){
+                list1.add(cb.greaterThan(root.get("date"),startTime));
+            }
+            if (null!=endTime){
+                list1.add(cb.lessThanOrEqualTo(root.get("date"),endTime));
+            }
+            return cb.and(list1.toArray(new Predicate[list1.size()]));
+        };
+        List<Goods> goodsList = goodsRepository.findAll(specification2);
 
         commodityDto.setGoods(goodsList);
         return commodityDto;
